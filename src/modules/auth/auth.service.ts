@@ -9,28 +9,35 @@ import { JwtAuthService } from '@modules/auth/jwt-auth.service'
 import { normalizeEmail, normalizePhone, normalizeUsername, trimText } from '@utils/common'
 import { UserStatus } from '@app-types/user.type'
 import { Utils } from '@utils/utils'
+import { IRegisterRequest } from '@commons/interfaces/request/auth/register.interface'
+import { RedisService } from '@modules/redis/redis.service'
 
 @Injectable()
 export class AuthService {
 	private readonly logger: CustomLogger = new CustomLogger()
 	constructor(
 		private readonly userRepository: UserRepository,
-		private readonly jwtAuthService: JwtAuthService
+		private readonly jwtAuthService: JwtAuthService,
+		private readonly redisService: RedisService
 	) {
 		this.logger.setContext(AuthService.name)
 	}
 
-	async register(payload: {
-		username: string
-		email?: string
-		phone?: string
-		password: string
-		firstName?: string
-		lastName?: string
-	}) {
+	async register(payload: IRegisterRequest) {
 		const PREFIX = `REGISTER_${payload?.username || payload?.email || payload?.phone}`
+		const lockKey = `lock:register:${payload.email || payload.phone}`
+		const lockValue = PREFIX
+		const lockTTL = 30
 
 		try {
+			const acquired = await this.redisService.set(lockKey, lockValue, lockTTL, true)
+			if (!acquired) {
+				throw new BadRequestException({
+					message: 'SOMETHING_WENT_WRONG',
+					data: null,
+					statusCode: ERROR_CODE.SOMETHING_WENT_WRONG
+				})
+			}
 			const username = normalizeUsername(payload.username)
 			const email = normalizeEmail(payload.email)
 			const phone = normalizePhone(payload.phone)
@@ -109,6 +116,11 @@ export class AuthService {
 		} catch (e) {
 			this.logger.error(`${PREFIX}: ${e.message} - Action: ${LOGGER_ACTIONS.CATCH_FUNCTION} - Stack: ${e.stack}`)
 			throw e
+		} finally {
+			const currentValue = await this.redisService.get(lockKey)
+			if (currentValue === lockValue) {
+				await this.redisService.del(lockKey)
+			}
 		}
 	}
 

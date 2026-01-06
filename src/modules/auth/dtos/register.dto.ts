@@ -61,7 +61,12 @@ export class RegisterRequestDto {
 	@ApiPropertyOptional()
 	@IsOptional()
 	@IsString()
-	readonly fullName?: string
+	readonly firstName?: string
+
+	@ApiPropertyOptional()
+	@IsOptional()
+	@IsString()
+	readonly lastName?: string
 
 	@ApiPropertyOptional()
 	@IsOptional()
