@@ -1,20 +1,8 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://www.boomracing.com/image/data/boomracingrc.png" width="200" alt="Nest Logo" /></a>
-</p>
-
-
-<p align="center">
-    ATE Backend Nest.js
-</p>
-
 ## Docs
 
 - Swagger:
   <a href="http://localhost:3000/docs" target="blank">http://localhost:3000/docs
 </a>
-
-- Bullboard: <a href="http://localhost:3000/queues" target="blank">http://localhost:3000/queues
-   </a>
 
 ## Requirements
 - Node.js >= 20, yarn >= 1.22
