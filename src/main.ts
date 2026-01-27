@@ -26,7 +26,7 @@ async function bootstrap() {
 
 	app.use(
 		session({
-			name: 'sena',
+			name: 'be',
 			secret: 'urABLOEJZg2G9ceWl5aJclK5fbaXUxJR',
 			saveUninitialized: false,
 			resave: false,
@@ -67,10 +67,10 @@ async function bootstrap() {
 	)
 
 	const options = new DocumentBuilder()
-		.setTitle('Sena APIs')
-		.setDescription('The Sena APIs description')
+		.setTitle('BE APIs')
+		.setDescription('The BE APIs description')
 		.setVersion('1.0.0')
-		.addTag('Sena')
+		.addTag('BE')
 		.build()
 	const document = SwaggerModule.createDocument(app, options)
 
@@ -79,7 +79,7 @@ async function bootstrap() {
 			url: `http://${process.env.HOST}:${process.env.PORT}/apis`,
 			persistAuthorization: true
 		},
-		customSiteTitle: 'Sena API Docs'
+		customSiteTitle: 'BE API Docs'
 	})
 
 	await app.listen(parseInt(process.env.PORT, 10))

@@ -1,7 +1,7 @@
 import { ParserType } from '@app-types/common'
 
-export const SERVICE_PREFIX = 'api/sena'
-export const SERVICE_NAME = 'CamboApplication'
+export const SERVICE_PREFIX = 'api/be'
+export const SERVICE_NAME = 'BEApplication'
 export const TOKEN_TYPE = {
 	ACCESS: {
 		TEXT: 'ACCESS',
@@ -117,7 +117,7 @@ export const COOKIE_OPTIONS = {
 	httpOnly: true,
 	secure: true,
 	maxAge: 30 * 60 * 1000, // 30 minutes
-	domain: '.senaskin.vn',
+	domain: '.bebase.vn',
 	path: '/',
 	sameSite: 'none'
 }
