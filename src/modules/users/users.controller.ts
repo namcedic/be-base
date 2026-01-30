@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, HttpCode, HttpStatus } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, HttpCode, HttpStatus, Query } from '@nestjs/common'
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger'
 import { UsersService } from './users.service'
 import { CreateUserDto } from './dtos/create-user.dto'
+import { QueryUsersDto } from './dtos/query-users.dto'
 
 @ApiTags('Users')
 @Controller('v1/users')
@@ -18,8 +19,8 @@ export class UsersController {
 
 	@Get()
 	@ApiOperation({ summary: 'Get all users' })
-	findAll() {
-		return this.usersService.findAll()
+	findAll(@Query() query: QueryUsersDto) {
+		return this.usersService.findAll(query)
 	}
 
 	@Get(':id')
