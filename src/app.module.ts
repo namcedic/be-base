@@ -5,6 +5,7 @@ import { envConfigs } from './configs'
 import { typeOrmConfig } from '@databases/typeorm.config'
 import { AuthModule } from '@modules/auth/auth.module'
 import { RedisModule } from '@modules/redis/redis.module'
+import { UsersModule } from '@modules/users/users.module'
 
 @Module({
 	imports: [
@@ -15,6 +16,7 @@ import { RedisModule } from '@modules/redis/redis.module'
 		}),
 		TypeOrmModule.forRoot(typeOrmConfig),
 		RedisModule,
+		UsersModule,
 		AuthModule
 	],
 	controllers: [],
