@@ -5,9 +5,10 @@ import { UserRepository } from '@databases/repositories/user.repository'
 import { UsersService } from './users.service'
 import { UsersController } from './users.controller'
 import { AuthMiddleware } from '@middlewares/auth.middleware'
+import { AuthModule } from '@modules/auth/auth.module'
 
 @Module({
-	imports: [TypeOrmModule.forFeature([UserEntity])],
+	imports: [TypeOrmModule.forFeature([UserEntity]), AuthModule],
 	providers: [UsersService, UserRepository],
 	controllers: [UsersController]
 })
